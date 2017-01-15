@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="font/iconfont.css">
+     <script src="js/jquery-3.1.0.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<div class="scene">
+    <div class="room">
+        <div class="panel panel1"></div>
+        <div class="panel">
+            <div class="left">
+             <div class="bizhi">
+               <div class="button"></div>
+               <div class="zhen">
+                   <a class="tubiao" href="dazi/index.html"style="background:url(img/c4.jpg);background-size:100% 100%;display:block"></a>
+                    <a class="tubiao" href="hunli/index.html" style="background:url(img/42.png);background-size:100% 100%;transform:rotateY(180deg) display:block"></a>
+                     <a class="tubiao" href="http://tongxunlu.duapp.com"style="background:url(img/da.png);background-size:100% 100%;display:block"></a>
+                      <a class="tubiao" href="game/index.html"style="background:url(img/20399.jpg);background-size:100% 100%;display:block"></a>
+                      <a class="tubiao" style="background:url(img/a2.png);background-size:100% 100%;display:block"></a>
+               </div>
+             </div>
+            </div>
+
+            <div class="left_bottom">
+                <!--<img src="img/shafa.png" alt="">-->
+            </div>
+        </div>
+        <div class="panel">
+        </div>
+        <div class="panel">
+            <div class="right">
+               <a href=""></a>
+               <!--  <div ></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div> -->
+            </div>
+        </div>
+        <div class="panel panel5"></div>
+        <div class="panel">
+            <div class="diann">
+                <div class="dong">
+                    <a href="http://chihuo.duapp.com/shu/index/header.php"><img src="img/logo.png" alt=""></a>
+                     <a href="http://wq1055.duapp.com/phpcms/index.php"><img src="img/315.png" alt=""></a>
+                      <a href="http://wangqing.duapp.com/huan/huanteng/index.php"><img src="img/643.png" alt=""></a>
+                       <a href="baidu/index.html"><img src="img/926.png" alt=""></a>
+                       <a href="wangyi/index.html"><img src="img/97.jpg" alt=""></a>
+                       <a href="apple/index.html"><img src="img/large.jpg" alt=""></a>
+
+                    <div class="anniul">-</div>
+                    <div class="anniur">+</div>
+                </div>
+            </div>
+            <div class="button1"></div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(".button").click(function(){
+        $(".zhen").css("display","block")
+    })
+     $(".button1").click(function(){
+        $(".dong").css("display","block")
+    })
+
+    var num=0;
+    $(".dong a").hide().eq(num).show();
+    function move(){
+        num++;
+        if(num>=$(".dong a").length){
+            num=0
+        }
+        $(".dong a").fadeOut(300).eq(num).fadeIn();
+    }
+    $(".dong div").click(function(){
+        move()
+    })
+</script>
+</html>

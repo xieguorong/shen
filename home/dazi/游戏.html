@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+	<script src="function.js"></script>
+	<style>
+body{
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	color: #fff;
+	font-size: 40px;
+  background-image: url(img/begin.jpg);
+  background-repeat: no-repeat;
+  background-size: 1366px 640px;
+}
+.box{
+  width: 150px;
+  height: 150px;
+	position: fixed;
+	left:50px;
+  top: 30px;
+  display: none
+}
+.box div{
+	width:150px;
+	height: 50px;
+	color: black;
+	text-align: center;
+	font-size: 30px;
+  background-image:url(img/3.png);
+  /*background-size: 150px 50px;*/
+  background-repeat: no-repeat;
+}
+#kaishi{
+  position: relative;
+ 
+}
+#btn{
+  width: 213px;
+  height:150px;
+  border:0;
+  background-image: url(img/start.png);
+  position: absolute;
+  left: 553px;
+  top: 390px; 
+  display: block
+}
+.back{
+  width: 1366px;
+  height: 640px;
+  display: none;
+}
+.shibai{
+ width: 300px;
+ height: 250px;
+ background:#263B00;
+ opacity: 0.8;
+position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto auto;
+  display: none
+}
+.cxbtn,.tui{
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 50px;
+  background:#E6545C;
+  border: none;
+  color: white;
+}
+.cgshibai{
+  font-size: 20px;
+width:100%;
+height: 150px;
+font-size: 30px;
+text-align: center;
+line-height: 150px;
+color: white
+ }
+.cxbtn{
+ position: absolute;
+ left: 30px;
+ bottom:50px
+}
+.tui{
+ position: absolute;
+ right:30px;
+ bottom:50px
+}
+	</style>
+</head>
+<body>
+  <form action=""id="kaishi">
+    <input type="button"id="btn">
+  </form>
+  <div>
+    <img src="img/bg.jpg" alt=""class="back">
+    <div class="shibai">
+        <div class="cgshibai">闯关失败!!!</div>
+        <input type="button"value="重新再来"class="cxbtn">
+        <input type="button"value="退出游戏"class="tui">
+    </div>
+    <div class="shibai chenggong">
+      <div class="cgshibai">恭喜过关!!!</div>
+        <input type="button"value="下一关"class="cxbtn next">
+        <input type="button"value="退出游戏"class="tui outt">
+      </div>
+  </div>
+  </div>
+  <div class="box"> 
+	<div class="guan">关卡:<span>1</span></div>
+	<div class="shengming">生命值:<span>5</span></div>
+	<div class="fenzhi">分值:<span>0</span></div>
+   </div>
+</body>
+<script>
+
+     var box=$(".box")[0]
+     var guan=$("span",$(".guan")[0])[0];
+     var shengming=$("span",$(".shengming")[0])[0];  
+     var fenzhi=$("span",$(".fenzhi")[0])[0];
+     var btn=$("#btn")
+     var kaishi=$("#kaishi")
+     var back=$(".back")[0] 
+     var shibai=$(".shibai")[0]
+     var chenggong=$(".shibai chenggong")[0];
+     var cxbtn=$(".cxbtn")[0];
+     var tui=$(".tui")[0]
+     var chenggong=$(".shibai chenggong")[0];
+     var next=$(".cxbtn next")[0];
+     var tuichu=$(".tui outt")[0]
+
+
+     var num=5
+     var guannum=1;
+     var shengmingnum=5;
+     var fenzhinum=0;
+     var t;
+
+    btn.onclick=function(){
+      suiji(5)
+      poai(newarr);
+      move();
+      keyp();
+      back.style.display="block"
+      box.style.display="block"
+      document.body.style.backgroundImage="none"
+      btn.style.display="none"
+    }
+
+  var imgarr=[{"zimu":"A","src":"img/a.png"},
+  {"zimu":"B","src":"img/b.png"},
+  {"zimu":"C","src":"img/c.png"},
+  {"zimu":"D","src":"img/d.png"},
+  {"zimu":"E","src":"img/e.png"},
+  {"zimu":"F","src":"img/f.png"},
+  {"zimu":"G","src":"img/g.png"},
+  {"zimu":"H","src":"img/h.png"},
+  {"zimu":"I","src":"img/i.png"},
+  {"zimu":"J","src":"img/j.png"},
+  {"zimu":"K","src":"img/k.png"},
+  {"zimu":"L","src":"img/l.png"},
+  {"zimu":"M","src":"img/m.png"},
+  {"zimu":"N","src":"img/n.png"},
+  {"zimu":"O","src":"img/o.png"},
+  {"zimu":"P","src":"img/p.png"},
+  {"zimu":"Q","src":"img/q.png"},
+  {"zimu":"R","src":"img/r.png"},
+  {"zimu":"S","src":"img/s.png"},
+  {"zimu":"T","src":"img/t.png"},
+  {"zimu":"U","src":"img/u.png"},
+  {"zimu":"V","src":"img/v.png"},
+  {"zimu":"W","src":"img/w.png"},
+  {"zimu":"X","src":"img/x.png"},
+  {"zimu":"Y","src":"img/y.png"},
+  {"zimu":"Z","src":"img/z.png"}];
+	// var letterarr=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    var newarr=[]
+	function suiji(num){
+		var xinarr=[]
+        for (var i = 0; i < num; i++) {
+        	var letters=imgarr[Math.floor(Math.random()*imgarr.length)]
+	        while(panduan(letters,newarr)){     
+              letters=imgarr[Math.floor(Math.random()*imgarr.length)];
+	        }
+	        newarr.push(letters); 
+	        xinarr.push(letters);
+        };
+         return xinarr
+	}
+	function panduan(val,arr){
+		for(var i in arr){
+			if(val==arr[i]){
+				return true
+			}
+		}
+       return false
+	}
+ 
+
+  //创建容器
+  var spanarr=[];
+  function poai(arr){
+  	var cw=document.documentElement.clientWidth
+  	for (var i = 0; i < arr.length; i++) {
+  		var span=document.createElement("span");
+      var img=document.createElement("img");
+      img.src=arr[i].src;
+      span.appendChild(img)
+  		var lefts=100+(Math.random()*(cw-200))
+  	    var tops=Math.random()*25;
+	  	while(chongfu(lefts,spanarr)){
+	  			lefts=100+(Math.random()*(cw-200))
+	  		} 
+	     // span.innerHTML=arr[i];
+  	  span.lefts=lefts
+	  	spanarr.push(span)
+  		span.style.cssText="position:absolute;left:"+lefts+"px;top:"+tops+"px;"
+      img.style.cssText="width:60px;height:60px"
+  		document.body.appendChild(span)	  
+  	};
+  }
+  function chongfu(val,arr){
+  	for(var i in arr){
+  		if(val>=(arr[i].lefts-50)&& val<=(arr[i].lefts+50)){
+  			return true
+  		}
+  	}
+  			return false    
+  }
+  //让字母动起来
+  function move(){
+  t=setInterval(function(){
+  		var ch=document.documentElement.clientHeight;
+  		for (var i = 0; i < spanarr.length; i++) {
+  			spanarr[i].style.top=spanarr[i].offsetTop+10+"px";
+  			if(spanarr[i].offsetTop>=(ch-100)){
+  				document.body.removeChild(spanarr[i]);
+  				newarr.splice(i,1);
+  				spanarr.splice(i,1);
+  				poai(suiji(1))
+  				//生命值
+  				shengmingnum--;
+  				shengming.innerHTML=shengmingnum
+  				if(shengmingnum==0){
+  					shibai.style.display="block"   
+            tui.onclick=function(){
+               clearInterval(t);
+               // for (var i = 0; i < spanarr.length; i++) {
+               //    document.body.removeChild(spanarr[i])
+               //  };
+                shibai.style.display="none";
+                back.style.display="none";
+                box.style.display="none";
+                document.body.style.backgroundImage="url(img/begin.jpg)";
+                btn.style.display="block";                      
+            }
+               clearInterval(t);
+               for (var i = 0; i < spanarr.length; i++) {
+                  document.body.removeChild(spanarr[i])
+                };  				
+  				}
+  			}
+
+  		};
+
+  	},100)
+  }
+   cxbtn.onclick=function(){
+                fenzhinum=0;
+                fenzhi.innerHTML=fenzhinum;
+                shengmingnum=5;
+                shengming.innerHTML=shengmingnum;
+                shibai.style.display="none"
+                suiji()
+                poai(newarr);
+                move()
+            }
+  //按下事件
+  function keyp(){
+  	document.onkeyup=function(e){
+  		var e=e||window.event;
+  		var aa=String.fromCharCode(e.keyCode)
+  		for (var i = 0; i < spanarr.length; i++) {
+  			if(aa==newarr[i].zimu){
+  				document.body.removeChild(spanarr[i]);
+  				newarr.splice(i,1);
+  				spanarr.splice(i,1);
+  				poai(suiji(1))
+
+
+
+  				//分值；
+  				fenzhinum++;
+  				fenzhi.innerHTML=fenzhinum
+  				if(fenzhinum>=10){
+  				guannum++;
+  				chenggong.style.display="block"; 
+          clearInterval(t)  
+      
+  				fenzhi.innerHTML=0;
+  				guan.innerHTML=guannum;
+  				fenzhinum=0;
+	  				for (var i = 0; i < spanarr.length; i++) {
+	  					document.body.removeChild(spanarr[i])
+	  				};
+                newarr=[];
+  				      spanarr=[];	
+  		          xinarr=[]
+          next.onclick=function(){
+               chenggong.style.display="none"
+                num+=1
+                poai(suiji(num));
+                move();
+            }
+            tuichu.onclick=function(){
+               chenggong.style.display="none"
+               clearInterval(t);
+                shibai.style.display="none";
+                back.style.display="none";
+                box.style.display="none";
+                document.body.style.backgroundImage="url(img/begin.jpg)";
+                btn.style.display="block"
+            }
+  		          
+          }
+
+  			}
+  		};
+  	}
+  }
+
+</script>
+</html>

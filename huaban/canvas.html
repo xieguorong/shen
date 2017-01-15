@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>画板</title>
+	<script src="js/jquery-3.1.0.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/shape.js"></script>
+	<style>
+	 *{
+            box-sizing: border-box;
+        }
+	body,html{
+		width: 100%;
+		height: 100%;
+	}
+	body,html,ul,li,input{
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+      .box{
+      	width: 100%;
+      	height: 100%;
+      	background: url(img/huaban.jpg) no-repeat center center;
+      	background-size:100% 100%;
+      }
+      .menu_left,.menu_right{
+      	width: 200px;
+      	height:400px;
+      	position: fixed;
+      	top:0;
+      	bottom:0;
+      	margin:auto 0;
+      	background: #4D4D4D;
+      	box-shadow: 0 0 30px #000;
+		-webkit-box-shadow: 0 0 30px #000;
+      }
+      .menu_left{
+      	left: 0;
+      	border-radius:0 15px 15px 0;
+        height:470px;  
+        width: 220px;    
+      }
+      .menu_right{
+      	right: 0;
+      	border-radius: 15px 0  0 15px;
+
+      }
+      .canvas_box{
+      	width: 60%;
+      	height:100%;
+      	position: absolute;
+      	top: 0;
+      	bottom: 0;
+      	right: 0;
+      	left:0;
+      	margin: auto;
+		  overflow: hidden;
+      }
+      .canvas_box canvas{
+      	background: #eee;
+      }
+      .menu_left ul,.menu_right ul{
+      	width: 100%;
+      	height: 100%;
+      }
+      .menu_left .menu_list{
+      	height: 18%;
+      }
+      .menu_list{
+      	width: 100%;
+      	height: 20%;
+      	background: #3D3D3D;
+      	border-radius:0 15px 0 0 ;
+      }
+      .menu_left .menu_list:nth-child(2),.menu_right .menu_list:nth-child(2){
+      	border-radius:0;
+      	background:none;
+      	height:64%;
+
+      }
+      .menu_right .menu_list:nth-child(1){
+      	border-radius: 15px 0 0 0;
+        
+      }
+       .menu_left .menu_list:nth-child(3),.menu_right .menu_list:nth-child(3){
+      	height: 18%;
+      	border-radius: 0 0 15px 0;
+      }
+      .menu_right .menu_list:nth-child(3){
+      	border-radius: 0 0 0 15px;
+      }
+      .innermenu{
+      	width: 100%;
+      	height: 100%;
+      }
+      .innermenu li{
+      	float:left;
+      	cursor: pointer;
+      }
+     .menu_left  .menu_list:nth-child(1) .inner_list{
+      	width: 33.333%;
+      	height: 100%;
+      	text-align: center;
+      	padding-top:18px;
+      }
+       .menu_left .menu_list:nth-child(2) .inner_list{
+      	width:50%;
+      	height:33.33%;
+      	text-align: center;
+      	padding-top: 20px;
+      	color: #fff;
+      }
+       .menu_left .menu_list:nth-child(2) .inner_list input{
+       	width:32px;
+       	cursor: pointer;
+        height:18px
+       }
+       .menu_left  .menu_list:nth-child(3) .inner_list{
+      	width: 50%;
+      	height: 100%;
+      	text-align: center;
+      	padding-top:18px;
+      }
+        .menu_right  .menu_list:nth-child(1) .inner_list{
+      	width:100%;
+      	height:50%;
+      	text-align: center;
+      	padding-top:8px;
+      	color: #fff;
+      }
+      .menu_right input{
+      	cursor: pointer;
+      }
+       .menu_right  .menu_list:nth-child(2) .inner_list {
+      	width:100%;	
+      	height:25%;	
+      	text-align: center;
+      	color: #fff;
+      	padding-top: 28px;
+      }
+        .menu_right  .menu_list:nth-child(2) .inner_list div{
+      	width:50%;	
+      	height:3px;
+      	background:#000;
+      	margin: 0 auto;
+      }
+          .menu_right  .menu_list:nth-child(2) .inner_list .zhong{
+      	height:5px;	
+      }
+             .menu_right  .menu_list:nth-child(2) .inner_list .cu{	
+      	height:8px;
+      }
+       .menu_right  .menu_list .number{
+       	width: 50px;
+       	height:20px;
+       	margin-top:5px;       	
+       }
+         .copy{
+            position: absolute;
+            left:0;top:0;z-index:999;
+            width:100%;height:100%;
+        }
+	 .box_small{
+		 background-color: white;
+		 font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		 width: 350px;
+		 height: 250px;
+		 padding:17px;
+		 border-radius: 5px;
+		 text-align: center;
+		 position: fixed;
+		 left: 0;
+		 top: 0;
+		 right:0;
+		 bottom:0;
+		 margin:auto;
+		 overflow: hidden;
+		 z-index: 99999;
+		 display: none;
+	 }
+	 .box_small .yuan{
+		 width: 80px;
+		 height: 80px;
+		 border: 4px solid #ff0b0c;
+		 border-radius: 50%;
+		 box-sizing: content-box;
+		 position: absolute;
+		 left:0;
+		 right: 0;
+		 margin:0 auto;
+		 top:40px;
+		 z-index: 2;
+		 -webkit-animation: move2 0.5s;
+		 animation: move2 0.5s;
+	 }
+	 .box_small .left_line{
+		 width: 47px;
+		 transform: rotate(45deg);
+		 height: 5px;
+		 background-color:#ff0b0c;
+		 display: block;
+		 border-radius: 2px;
+		 position: absolute;
+		 z-index: 2;
+		 left:0;
+		 top:0;
+		 right: 0;
+		 bottom: 0;
+		 margin: auto;
+	 }
+	 .box_small .right_line{
+		 width: 47px;
+		 transform: rotate(-45deg);
+		 height: 5px;
+		 background-color:#ff0b0c;
+		 display: block;
+		 border-radius: 2px;
+		 position: absolute;
+		 z-index: 2;
+		 left:0;
+		 top:0;
+		 right: 0;
+		 bottom: 0;
+		 margin: auto;
+	 }
+	 .box_small h2{
+		 color: #575757;
+		 font-size: 30px;
+		 text-align: center;
+		 font-weight: 600;
+		 text-transform: none;
+		 line-height: 40px;
+		 display: block;
+		 position: absolute;
+		 left: 0;
+		 right: 0;
+		 margin:0 auto;
+		 top:135px;
+	 }
+	 .box_small button{
+		 width: 98px;
+		 height: 41px;
+		 position: absolute;
+		 left: 0;
+		 right: 0;
+		 margin:0 auto;
+		 bottom:20px;
+		 background-color: rgb(174, 222, 244);
+		 color:#fff;
+		 border:none;
+		 border-radius: 5px;
+		 box-shadow: 0 0 5px rgb(174, 222, 244);
+		 font-size: 15px;
+		 transtion:background-color ;
+		 cursor: pointer;
+	 }
+	 .box_small button:hover{
+		 background-color: rgb(167,213,234);
+	 }
+	 @keyframes  move2{
+		 0%{
+			 transform: rotateX(100deg);
+			 -webkit-transform: rotateX(100deg);
+			 opacity: 0;
+		 }
+		 to{
+			 transform: rotateX(0deg);
+			 -webkit-transform: rotateX(0deg);
+			 opacity: 1;
+		 }
+	 }
+		.xp{
+			border:1px solid #000;
+			position:absolute;
+			display: none;
+		}
+	</style>
+</head>
+<body >
+	<div class="box">
+		<div class="menu_left">
+			<ul>
+				<li class="menu_list">
+					<ul class="innermenu">
+						<li class="inner_list inner_list1">
+							<img src="img/xin.png" alt="" title="新建文件">
+						</li>
+						<li class="inner_list inner_list2">
+							<img src="img/bao.png" alt="" title="下载文件">
+						</li>
+						<li class="inner_list inner_list3">
+							<img src="img/fan.png" alt="" title="返回">
+						</li>
+					</ul>
+				</li>
+				<li class="menu_list">
+					<ul class="innermenu">
+						<li class="inner_list" data-role="line">
+							<img src="img/线条.png" alt="" title="线条">
+						</li>
+						<li class="inner_list" data-role="rect">
+							<img src="img/矩形.png" alt="" title="矩形">
+						</li>
+						<li class="inner_list" data-role="arc"> 
+							<img src="img/圆.png" alt="" title="圆">
+						</li>
+							<li class="inner_list" data-role="pen">
+							<img src="img/铅笔.png" alt="" title="铅笔">
+						</li>
+						<li class="inner_list" data-role="jiao" style="padding-top:0">
+							<img src="img/五角星.png" alt="" title="多角星"><br><br>
+							角数&nbsp<input type="number" class="number1" min="3">
+						</li>
+						<li class="inner_list" data-role="bian" style="padding-top:0" >
+							<img src="img/五边形.png" alt="" title="多边形"><br><br>
+							边数&nbsp<input type="number" class="number2" min="3">
+						</li>
+					</ul>
+				</li>
+				<li class="menu_list">
+					<ul class="innermenu">
+						<li class="inner_list" data-role="fill">
+							<img src="img/填充.png" alt="" title="填充">
+						</li>
+						<li class="inner_list" data-role="stroke">
+							<img src="img/lun.png" alt="" title="轮廓">
+						</li>
+					</ul>
+				</li>
+			</ul>
+			</div>
+        <div class="canvas_box">
+			<canvas></canvas>
+			<div class="xp"></div>
+			<div class="copy"></div>
+
+		</div>
+		<div class="menu_right">
+				<ul>
+				<li class="menu_list">
+					<ul class="innermenu">
+						<li class="inner_list">&nbsp边颜色&nbsp<input type="color" data-role="border"></li>
+						<li class="inner_list">背景颜色&nbsp<input type="color" data-role="fill"></li>
+               
+					</ul>
+				</li>
+				<li class="menu_list">
+					<ul class="innermenu">
+						<li class="inner_list" data-role="3">
+							<div class="xi"></div>
+						</li>
+						<li class="inner_list" data-role="5">
+							<div class="zhong"></div>
+						</li>
+						<li class="inner_list" data-role="8">
+							<div class="cu"></div>
+						</li>
+						<li class="inner_list" style="padding-top:0;">
+							自定义&nbsp<input type="number" class="number" min="1">
+						</li>
+					</ul>
+				</li>
+				<li class="menu_list">
+					<ul class="innermenu">
+						<li class="inner_list" style="padding-top:15px;padding-left:42px;position:relative">
+							<img src="img/ereaer.png" alt="" style="text-align:center;">
+							<input type="number" style="width:40px;position: absolute;right:-70px;top:25px;" min="20">
+
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="box_small">
+			<div class="yuan">
+				<span class="left_line "></span>
+				<span class="right_line "></span>
+			</div>
+			<h2>Error!</h2>
+			<button >返回</button>
+		</div>
+	</div>
+</body>
+</html>
